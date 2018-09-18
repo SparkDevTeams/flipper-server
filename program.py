@@ -1,7 +1,26 @@
 import soundcard as sc
 import numpy
 
-SAMPLERATE=44100
+PI = numpy.pi # 3.14159... (the angle of a circle)
+SAMPLERATE=44100 # A samplerate supported by nearly all devices
+
+def sine_tone(frequency, duration=0.1, sample_rate=SAMPLERATE, channels=1):
+	"""
+	Generate a sinewave tone, given:
+	`frequency` in Hertz (Hz), a measurement of cycles/oscillations per second 
+	`duration` in seconds (can be a decimal), default=0.1 seconds
+	`sample_rate`, the amount of samples per, default=44100
+	`channels`, the amount of audio tracks, such as a left and right channel for stereo playback, default=1 (mono sound)
+	"""
+
+	data = [] # An empty array where we will store points on a graph
+	
+	for i in numpy.arange(sample_rate * duration):
+		sample = numpy.sin((2 * PI * frequency * (i / sample_rate)))
+		data.append(sample)
+	
+	default_speaker.play(data/numpy.max(data), samplerate=sample_rate, channels=channels)
+
 
 print("PLAYBACK DEVICES:")
 try:
@@ -21,7 +40,7 @@ except Exception:
 	print("Unable to find default playback devices.")
 	pass
 
-print()
+print() # Prints an empty line
 
 print("RECORDING DEVICES:")
 try:
@@ -57,3 +76,39 @@ except Exception as err:
 	else:
 		print("ERROR: Unable to record and play back audio automatically.")
 	pass
+
+# You can explicitly set parameters to whatever you want
+# However, if you enter parameters in order, you don't need to set them
+sine_tone(frequency=329.63)
+sine_tone(220.00)
+sine_tone(392.00, duration=0.4)
+sine_tone(392.00, 0.4)
+# Theres a delay here because of the time it takes to graph the sine wave for 3 seconds
+sine_tone(490, 3)
+# There is almost no delay here because the sound is so short that the graph is created quickly
+sine_tone(390, 0.1)
+
+
+# From low frequency to below human hearing
+sine_tone(50, 1)
+# Some people won't be able to hear this
+sine_tone(30, 1)
+sine_tone(20, 1)
+# Most people won't be able to hear this
+sine_tone(1, 1)
+sine_tone(0.5, 1)
+sine_tone(0.3, 1)
+sine_tone(0.01, 1)
+
+
+# From normal frequency to beyond human hearing
+sine_tone(400, 1)
+sine_tone(600, 1)
+sine_tone(1000, 1)
+# Most people won't be able to hear this
+sine_tone(18000, 1)
+sine_tone(19000, 1)
+# Pretty much nobody can hear this high, but your pets might get agitated
+sine_tone(20000, 1)
+sine_tone(20500, 1)
+sine_tone(21000, 1)

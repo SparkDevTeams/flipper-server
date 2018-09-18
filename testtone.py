@@ -127,39 +127,33 @@ print() # Prints an empty line
 
 
 
-#Function to convert string to bits
+#Function to convert string to binary
 def string2bits(s=''):
     return [bin(ord(x))[2:].zfill(8) for x in s]
 
-#Function to convert bits to string
+#Function to convert binary to string
 def bits2string(b=None):
     return ''.join([chr(int(x, 2)) for x in b])
 
+#input allows us to prompt user for command input
 s = input("input command \n")
+#this takes the users input and translates it to binary
 b = string2bits(s)
+
 s2 = bits2string(b)
-
-
-for x in b[0]:
-    if x == "1":
-        sine_tone(5000,0.5)
-    elif x == "0":
-        sine_tone(500,0.5)
-    else:
-        print ("error" )
-
+i = 0
+#while i is less than the number of items in the array of bits
+while i < len(b):
+    #for every individual binary
+    for x in b[i]:
+        #emit high tone
+        if x == "1":
+            sine_tone(5000,0.1)
+        #emit low tone
+        elif x == "0":
+            sine_tone(500,0.1)
+        else:
+            print ("error" )
+    i += 1    
+#print the bits for verification
 print (b)
-    
-
-# print ('String:')
-# print (s)
-
-# print ('\nList of Bits:')
-# for x in b:
-#     print (x)
-
-# print ('\nString:')
-# print (s2)
-
-
-

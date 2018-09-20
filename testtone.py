@@ -1,5 +1,6 @@
 import soundcard as sc
 import numpy
+import time
 
 PI = numpy.pi # 3.14159... (the angle of a circle)
 SAMPLERATE=44100 # A samplerate supported by nearly all devices
@@ -136,11 +137,15 @@ def bits2string(b=None):
     return ''.join([chr(int(x, 2)) for x in b])
 
 #input allows us to prompt user for command input
-s = input("input command \n")
+s = input("Input command \n>")
 #this takes the users input and translates it to binary
 b = string2bits(s)
 
 s2 = bits2string(b)
+
+#Start timer
+t0 = time.time()
+
 i = 0
 #while i is less than the number of items in the array of bits
 while i < len(b):
@@ -154,6 +159,11 @@ while i < len(b):
             sine_tone(500,0.1)
         else:
             print ("error" )
-    i += 1    
+    i += 1
 #print the bits for verification
 print (b)
+
+#End timer
+t1 = time.time()
+total = t1-t0
+print("Time taken: ", total, " seconds")

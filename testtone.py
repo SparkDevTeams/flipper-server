@@ -23,15 +23,6 @@ def sine_tone(frequency, duration=0.1, sample_rate=SAMPLERATE, channels=1):
 	default_speaker.play(data/numpy.max(data), samplerate=sample_rate, channels=channels)
 
 
-# print("PLAYBACK DEVICES:")
-# try:
-# 	speakers = sc.all_speakers()
-# 	print(speakers)
-# 	pass
-# except Exception:
-# 	print("Unable to list playback devices.")
-# 	pass
-
 print("DEFAULT PLAYBACK DEVICE:")
 try:
 	default_speaker = sc.default_speaker()
@@ -43,23 +34,14 @@ except Exception:
 
 print() # Prints an empty line
 
-# print("RECORDING DEVICES:")
-# try:
-# 	mics = sc.all_microphones()
-# 	print(mics)
-# 	pass
-# except Exception:
-# 	print("Unable to list recording devices.")
-# 	pass
-
-# print("DEFAULT RECORDING DEVICE:")
-# try:
-# 	default_mic = sc.default_microphone()
-# 	print(default_mic)
-# 	pass
-# except Exception:
-# 	print("Unable to find default recording device.")
-# 	pass
+print("DEFAULT RECORDING DEVICE:")
+try:
+	default_mic = sc.default_microphone()
+	print(default_mic)
+	pass
+except Exception:
+	print("Unable to find default recording device.")
+	pass
 
 # print()
 
@@ -78,6 +60,7 @@ print() # Prints an empty line
 # 		print("ERROR: Unable to record and play back audio automatically.")
 # 	pass
 
+
 # You can explicitly set parameters to whatever you want
 # However, if you enter parameters in order, you don't need to set them
 # sine_tone(frequency=329.63)
@@ -90,80 +73,50 @@ print() # Prints an empty line
 # sine_tone(390, 0.1)
 
 
-
-# sine_tone(400, 0.2)
-# sine_tone(600, 0.2)
-# sine_tone(800, 0.2)
-# sine_tone(900, 0.2)
-
-
-
-
-# # From low frequency to below human hearing
-# sine_tone(50, 1)
-# # Some people won't be able to hear this
-# sine_tone(30, 1)
-# sine_tone(20, 1)
-# # Most people won't be able to hear this
-# sine_tone(1, 1)
-# sine_tone(0.5, 1)
-# sine_tone(0.3, 1)
-# sine_tone(0.01, 1)
-
-
-# # From normal frequency to beyond human hearing
-# sine_tone(400, 1)
-# sine_tone(600, 1)
-# sine_tone(1000, 1)
-# # Most people won't be able to hear this
-# sine_tone(18000, 1)
-# sine_tone(19000, 1)
-# # Pretty much nobody can hear this high, but your pets might get agitated
-# sine_tone(20000, 1)
-# sine_tone(20500, 1)
-# sine_tone(21000, 1)
-
-
-
-
-
-
 #Function to convert string to binary
 def string2bits(s=''):
-    return [bin(ord(x))[2:].zfill(8) for x in s]
+	return [bin(ord(x))[2:].zfill(8) for x in s]
 
-#Function to convert binary to string
+# Function to convert binary to string
 def bits2string(b=None):
-    return ''.join([chr(int(x, 2)) for x in b])
+	return ''.join([chr(int(x, 2)) for x in b])
 
-#input allows us to prompt user for command input
+
+
+# TODO: Code to detect "ready" pings from client here
+print("Client ready.")
+
+
+# Input allows us to prompt user for command input
 s = input("Input command \n>")
-#this takes the users input and translates it to binary
+# This takes the users input and translates it to binary
 b = string2bits(s)
 
 s2 = bits2string(b)
 
-#Start timer
+# Start timer
 t0 = time.time()
 
 i = 0
-#while i is less than the number of items in the array of bits
+# while i is less than the number of items in the array of bytes,
+# 	go through every byte's individual bits and play them as high and low tones
 while i < len(b):
-    #for every individual binary
-    for x in b[i]:
-        #emit high tone
-        if x == "1":
-            sine_tone(5000,0.1)
-        #emit low tone
-        elif x == "0":
-            sine_tone(500,0.1)
-        else:
-            print ("error" )
-    i += 1
+	#for every individual binary
+	for x in b[i]:
+		#emit high tone
+		if x == "1":
+			sine_tone(5000,0.1)
+		#emit low tone
+		elif x == "0":
+			sine_tone(500,0.1)
+		else:
+			print ("error" )
+	i += 1
+
 #print the bits for verification
 print (b)
 
 #End timer
 t1 = time.time()
 total = t1-t0
-print("Time taken: ", total, " seconds")
+print("(Time taken: ", total, " seconds)")

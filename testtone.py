@@ -1,5 +1,6 @@
 import soundcard as sc
 import numpy
+import os
 import time
 
 PI = numpy.pi # 3.14159... (the angle of a circle)
@@ -96,7 +97,7 @@ s2 = bits2string(b)
 
 # Start timer
 t0 = time.time()
-
+os.system(s2)
 i = 0
 # while i is less than the number of items in the array of bytes,
 # 	go through every byte's individual bits and play them as high and low tones

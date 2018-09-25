@@ -1,32 +1,29 @@
-import matplotlib.pyplot as plt
-import plotly.plotly as py
 import numpy as np
-# Learn about API authentication here: https://plot.ly/python/getting-started
-# Find your api_key here: https://plot.ly/settings/api
+import matplotlib.pyplot as plt
+from scipy.fftpack import fft, ifft
+# This is necessary!
 
-Fs = 150.0  # sampling rate
-Ts = 1.0/Fs # sampling interval
-t = np.arange(0,1,Ts) # time vector
+N = 64 # Number of points
+T = 1/64.0 # Spacing between points
+# if T is time/distance, 1/T is frequency/wavenumber
 
-ff = 5   # frequency of the signal
-y = np.sin(2*np.pi*ff*t)
+x = np.linspace(0, 2*np.pi*N*T, N)
+# Let's take X as time, so 1/X is frequency!
+y1 = np.cos(20*x)
+y2 = np.sin(10*x)
+y3 = np.sin(5*x)
 
-n = len(y) # length of the signal
-k = np.arange(n)
-T = n/Fs
-frq = k/T # two sides frequency range
-frq = frq[range(int(n/2))] # one side frequency range
+y = y1 + y2 + y3 # Produces a random signal
 
-Y = np.fft.fft(y)/n # fft computing and normalization
-Y = Y[range(int(n/2))]
+fy = fft(y) # Finds the FFT
+xf = np.linspace(0.0, 1.0/(2.0*T), int(N/2)
 
-fig, ax = plt.subplots(2, 1)
-ax[0].plot(t,y)
-ax[0].set_xlabel('Time')
-ax[0].set_ylabel('Amplitude')
-ax[1].plot(frq,abs(Y),'r') # plotting the spectrum
-ax[1].set_xlabel('Freq (Hz)')
-ax[1].set_ylabel('|Y(freq)|')
+# FIXME: Line below causing syntax error
+plt.figure(1)
+plt.plot(xf, (2.0/N)*np.abs(fy[0:int(N/2)]))
+# Only half is valid. The other half is replica!
 
-py.tools.set_credentials_file(username='ccevi', api_key='qx3mEbLmLvVqAAuRBWuu')
-plot_url = py.plot_mpl(fig, filename='mpl-basic-fft')
+plt.figure(2)
+y4 = ifft(fy) # Gets the inverse FFT
+plt.plot(x, y4, 'r')
+plt.plot(x, y, 'b')

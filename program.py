@@ -1,5 +1,7 @@
 import soundcard as sc
 import numpy
+import matplotlib.pyplot as plt
+from scipy.fftpack import fft, ifft
 
 PI = numpy.pi # 3.14159... (the angle of a circle)
 SAMPLERATE=44100 # A samplerate supported by nearly all devices
@@ -51,31 +53,31 @@ print() # Prints an empty line
 # 	print("Unable to list recording devices.")
 # 	pass
 
-# print("DEFAULT RECORDING DEVICE:")
-# try:
-# 	default_mic = sc.default_microphone()
-# 	print(default_mic)
-# 	pass
-# except Exception:
-# 	print("Unable to find default recording device.")
-# 	pass
+print("DEFAULT RECORDING DEVICE:")
+try:
+	default_mic = sc.default_microphone()
+	print(default_mic)
+	pass
+except Exception:
+	print("Unable to find default recording device.")
+	pass
 
-# print()
+print()
 
-# print("RECORD AND PLAYBACK:")
-# try:
-# 	print("Recording audio for 3 seconds...")
-# 	data = default_mic.record(samplerate=SAMPLERATE, numframes=(SAMPLERATE*3))
-# 	print("Playing back audio...")
-# 	default_speaker.play(data/numpy.max(data), samplerate=SAMPLERATE)
-# 	pass
-# except Exception as err:
-# 	print(err)
-# 	if str(err).find("0x80070005") != -1:
-# 		print("ERROR: Windows Permission denied when trying to access the mic.")
-# 	else:
-# 		print("ERROR: Unable to record and play back audio automatically.")
-# 	pass
+print("RECORD AND PLAYBACK:")
+try:
+	print("Recording audio for 3 seconds...")
+	data = default_mic.record(samplerate=SAMPLERATE, numframes=(SAMPLERATE*3))
+	print("Playing back audio...")
+	default_speaker.play(data/numpy.max(data), samplerate=SAMPLERATE)
+	pass
+except Exception as err:
+	print(err)
+	if str(err).find("0x80070005") != -1:
+		print("ERROR: Windows Permission denied when trying to access the mic.")
+	else:
+		print("ERROR: Unable to record and play back audio automatically.")
+	pass
 
 # You can explicitly set parameters to whatever you want
 # However, if you enter parameters in order, you don't need to set them
@@ -122,4 +124,32 @@ print() # Prints an empty line
 # sine_tone(20500, 1)
 # sine_tone(21000, 1)
 
+
+N = 64 # Number of points
+T = 1/64.0 # Spacing between points
+# if T is time/distance, 1/T is frequency/wavenumber
+
+x = numpy.linspace(0, 2*numpy.pi*N*T, N)
+# Let's take X as time, so 1/X is frequency!
+# y1 = numpy.cos(20*x)
+# y2 = numpy.sin(10*x)
+# y3 = numpy.sin(5*x)
+
+# y = y1 + y2 + y3 # Produces a random signal
+
+# for data[0] in i:
+# 	print(i)
+
+fy = fft(y) # Finds the FFT
+fx = numpy.linspace(0.0, 1.0/(2.0*T), int(N/2))
+
+plt.figure(1)
+plt.plot(fx, (2.0/N)*numpy.abs(fy[0:int(N/2)]))
+# Only half is valid. The other half is replica!
+
+plt.figure(2)
+y4 = ifft(fy) # Gets the inverse FFT
+plt.plot(x, y4, 'r')
+plt.plot(x, y, 'b')
+plt.show()
 

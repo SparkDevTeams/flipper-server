@@ -16,11 +16,10 @@ y3 = np.sin(5*x)
 y = y1 + y2 + y3 # Produces a random signal
 
 fy = fft(y) # Finds the FFT
-xf = np.linspace(0.0, 1.0/(2.0*T), int(N/2))
+fx = np.linspace(0.0, 1.0/(2.0*T), int(N/2))
 
-# FIXME: Line below causing syntax error
 plt.figure(1)
-plt.plot(xf, (2.0/N)*np.abs(fy[0:int(N/2)]))
+plt.plot(fx, (2.0/N)*np.abs(fy[0:int(N/2)]))
 # Only half is valid. The other half is replica!
 
 plt.figure(2)

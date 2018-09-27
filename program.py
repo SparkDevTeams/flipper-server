@@ -136,11 +136,15 @@ x = numpy.linspace(0, 2*numpy.pi*N*T, N)
 # y3 = numpy.sin(5*x)
 
 # y = y1 + y2 + y3 # Produces a random signal
+print(data)
 
-# for data[0] in i:
-# 	print(i)
 
-fy = fft(y) # Finds the FFT
+# LOOP THROUGH DATA FROM MIC
+for i in data:
+	if (i.all() != 0.0):
+		print(i[0])
+
+# fy = fft(y) # Finds the FFT
 fx = numpy.linspace(0.0, 1.0/(2.0*T), int(N/2))
 
 plt.figure(1)

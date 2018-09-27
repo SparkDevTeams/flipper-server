@@ -16,7 +16,7 @@ y3 = np.sin(5*x)
 y = y1 + y2 + y3 # Produces a random signal
 
 fy = fft(y) # Finds the FFT
-xf = np.linspace(0.0, 1.0/(2.0*T), int(N/2)
+xf = np.linspace(0.0, 1.0/(2.0*T), int(N/2))
 
 # FIXME: Line below causing syntax error
 plt.figure(1)
@@ -27,3 +27,4 @@ plt.figure(2)
 y4 = ifft(fy) # Gets the inverse FFT
 plt.plot(x, y4, 'r')
 plt.plot(x, y, 'b')
+plt.show()

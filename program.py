@@ -131,20 +131,23 @@ T = 1/64.0 # Spacing between points
 
 x = numpy.linspace(0, 2*numpy.pi*N*T, N)
 # Let's take X as time, so 1/X is frequency!
-# y1 = numpy.cos(20*x)
-# y2 = numpy.sin(10*x)
-# y3 = numpy.sin(5*x)
+y1 = numpy.cos(20*x)
+y2 = numpy.sin(10*x)
+y3 = numpy.sin(5*x)
 
-# y = y1 + y2 + y3 # Produces a random signal
+y = y1 + y2 + y3 # Produces a random signal
+
 print(data)
 
 
 # LOOP THROUGH DATA FROM MIC
 for i in data:
 	if (i.all() != 0.0):
-		print(i[0])
+		# print(i[0])
+		pass
 
-# fy = fft(y) # Finds the FFT
+
+fy = fft(y) # Finds the FFT
 fx = numpy.linspace(0.0, 1.0/(2.0*T), int(N/2))
 
 plt.figure(1)

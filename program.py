@@ -139,24 +139,31 @@ y = y1 + y2 + y3 # Produces a random signal
 
 print(data)
 
+dataForGraph = []
 
 # LOOP THROUGH DATA FROM MIC
 for i in data:
 	if (i.all() != 0.0):
+		dataForGraph.append(i[0])
 		# print(i[0])
 		pass
+# print(dataForGraph)
 
 
-fy = fft(y) # Finds the FFT
+
+
+fy = fft(dataForGraph) # Finds the FFT
 fx = numpy.linspace(0.0, 1.0/(2.0*T), int(N/2))
 
 plt.figure(1)
 plt.plot(fx, (2.0/N)*numpy.abs(fy[0:int(N/2)]))
 # Only half is valid. The other half is replica!
 
+
+
 plt.figure(2)
 y4 = ifft(fy) # Gets the inverse FFT
-plt.plot(x, y4, 'r')
-plt.plot(x, y, 'b')
+plt.plot(range((len(y4))), y4, 'r')
+plt.plot(range(len(dataForGraph)), dataForGraph, 'b')
 plt.show()
 

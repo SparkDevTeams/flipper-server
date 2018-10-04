@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.fftpack import fft, ifft
 import os
+import random
 
 
 PI = np.pi  # 3.14159... (the angle of a circle)
@@ -139,6 +140,11 @@ def plotDataAndFFT(pData):
 
     print('Figures have been plotted.')
     plt.show()  # Show all figures
+
+
+def bin(flatData):
+	result = random.randint(0,1)
+	return result
 
 
 # Store microphone data for 2 seconds into data array

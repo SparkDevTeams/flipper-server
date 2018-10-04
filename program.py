@@ -2,6 +2,8 @@ import soundcard as sc
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.fftpack import fft, ifft
+import os
+
 
 PI = np.pi  # 3.14159... (the angle of a circle)
 SAMPLERATE = 44100  # A samplerate supported by nearly all devices
@@ -146,8 +148,12 @@ data = recordAndPlay(2)
 # Plot data BEFORE loading file containing ambient sounds
 # TODO: Take a look at the plotDataAndFFT()
 
+# load from file
+data = np.load(os.path.join("data", 'ambientScreams.npy'))
 
-# data = TODO: Figure out how to load and save data from numpy arrays!
+#Store in file
+#np.save(os.path.join("data", 'test1.npy'), data)
+
 
 
 # TODO: Create a function that will play the data, when it is given as a parameter

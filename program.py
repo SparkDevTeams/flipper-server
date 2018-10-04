@@ -146,7 +146,7 @@ data = recordAndPlay(2)
 
 
 # Plot data BEFORE loading file containing ambient sounds
-# TODO: Take a look at the plotDataAndFFT()
+plotDataAndFFT(data)
 
 # load from file
 data = np.load(os.path.join("data", 'ambientScreams.npy'))
@@ -160,8 +160,7 @@ data = np.load(os.path.join("data", 'ambientScreams.npy'))
 
 
 # Plot data AFTER loading file containing ambient sounds
-# Same as the first TODO
-
+plotDataAndFFT(data)
 
 """
 SINE TONE GENERATION EXAMPLES

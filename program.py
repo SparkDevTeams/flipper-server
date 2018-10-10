@@ -72,6 +72,27 @@ data = np.load(os.path.join("data", 'ambient18000.npy'))
 # Plot data AFTER loading file containing ambient sounds
 flpr.plotDataAndFFT(data)
 
+
+dataFFT = flpr.FFT(data)
+
+#checks if frequency is between 9900 and 10000
+index = 9900
+while index < 10000:
+    index = index + 1
+    if dataFFT[index] >= 10:
+        print ("0")
+        break
+
+#checks if frequency is between 17900 and 18000
+index = 17900
+while index < 18000:
+    index = index + 1
+    if dataFFT[index] >= 10:
+        print(dataFFT[index])
+        print ("1")
+        break
+
+
 """
 SINE TONE GENERATION EXAMPLES
 """

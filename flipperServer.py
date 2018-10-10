@@ -68,24 +68,28 @@ def recordAndPlay(default_mic=None, default_speaker=None, length=1):
                 print("ERROR: Unable to record and play back audio automatically.")
             pass
 
-
-def plotDataAndFFT(pData):
-    """Plots given data array along with it's FFT"""
-
+def flattenData(fData):
     """
     STORE THE MICROPHONE DATA IN A FLATTENED FORM
     """
-    print('Processing data from microphone...')
     flatData = []
-    for i in pData:
+    for i in fData:
         if (i[0] != 0.0):
             flatData.append(i[0]+i[1])
+    return flatData
 
+def FFT(fftData):
     """
-    GENERATE THE DISCRETE FOURIER TRANSFORM OF THE FLATTENED DATA
+    RETURNS FFT
     """
-    print('Generating FFT of data...')
-    dataFFT = fft(flatData)  # Finds the FFT
+    dataFFT = fft(flattenData(fftData))  # Finds the FFT
+    return dataFFT
+
+
+def plotDataAndFFT(pData):
+    """Plots given data array along with it's FFT"""
+    flatData = flattenData(pData)
+    dataFFT = FFT(pData)
 
     """
     PLOT DATA AND FFT
@@ -111,19 +115,6 @@ def bin(flatData):
 	result = random.randint(0,1)
 	return result
 
-def FFT(pData):
-    """
-    STORE THE MICROPHONE DATA IN A FLATTENED FORM
-    """
-    flatData = []
-    for i in pData:
-        if (i[0] != 0.0):
-            flatData.append(i[0]+i[1])
 
-    """
-    RETURNS FFT
-    """
-    dataFFT = fft(flatData)  # Finds the FFT
-    return dataFFT
 
 

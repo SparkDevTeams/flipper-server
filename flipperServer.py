@@ -111,3 +111,19 @@ def bin(flatData):
 	result = random.randint(0,1)
 	return result
 
+def FFT(pData):
+    """
+    STORE THE MICROPHONE DATA IN A FLATTENED FORM
+    """
+    flatData = []
+    for i in pData:
+        if (i[0] != 0.0):
+            flatData.append(i[0]+i[1])
+
+    """
+    RETURNS FFT
+    """
+    dataFFT = fft(flatData)  # Finds the FFT
+    return dataFFT
+
+

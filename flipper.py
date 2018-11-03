@@ -8,6 +8,7 @@ PI = np.pi  # 3.14159... (the angle of a circle)
 SAMPLERATE = 44100  # A samplerate supported by nearly all devices
 data = []  # Recorded data will be stored here
 
+
 def getYPoints(paramY):
     """Spaces out evenly points of a Y graph from each other in order to plot them"""
     tempN = len(paramY)
@@ -21,7 +22,7 @@ def getXPoints(paramY):
     return np.linspace(0.0, 1.0/(2.0*tempT), int(tempN/2))
 
 
-def sine_tone(frequency, default_speaker, duration=0.1, sample_rate=SAMPLERATE, channels=1):
+def sine_tone(frequency, duration=0.1, default_speaker=sc.default_speaker(), sample_rate=SAMPLERATE, channels=1):
     """
     Generate a sinewave tone, given:
     `frequency` in Hertz (Hz), a measurement of cycles/oscillations per second 
@@ -32,15 +33,16 @@ def sine_tone(frequency, default_speaker, duration=0.1, sample_rate=SAMPLERATE, 
 
     sineData = []  # An empty array where we will store points on a graph
 
-    if default_speaker != None:
+    if default_speaker is not None:
         for i in np.arange(sample_rate * duration):
             sample = np.sin((2 * PI * frequency * (i / sample_rate)))
             sineData.append(sample)
 
         default_speaker.play(sineData/np.max(sineData),
-                            samplerate=sample_rate, channels=channels)
+                             samplerate=sample_rate, channels=channels)
     else:
         raise ValueError('No data found for speaker')
+
 
 def recordAndPlay(default_mic=None, default_speaker=None, length=1):
     """
@@ -58,7 +60,8 @@ def recordAndPlay(default_mic=None, default_speaker=None, length=1):
             tempData = default_mic.record(
                 samplerate=SAMPLERATE, numframes=(SAMPLERATE * length))
             print("Playing back audio...")
-            default_speaker.play(tempData/np.max(tempData), samplerate=SAMPLERATE)
+            default_speaker.play(tempData/np.max(tempData),
+                                 samplerate=SAMPLERATE)
             return tempData
         except Exception as err:
             print(err)
@@ -68,15 +71,17 @@ def recordAndPlay(default_mic=None, default_speaker=None, length=1):
                 print("ERROR: Unable to record and play back audio automatically.")
             pass
 
+
 def flattenData(fData):
     """
     STORE THE MICROPHONE DATA IN A FLATTENED FORM
     """
     flatData = []
     for i in fData:
-        if (i[0] != 0.0):
-            flatData.append(i[0]+i[1])
+        # if (i[0] != 0.0):
+        flatData.append(i[0])
     return flatData
+
 
 def FFT(fftData):
     """
@@ -92,8 +97,8 @@ def plotDataAndFFT(pData):
     dataFFT = FFT(pData)
 
     """
-    PLOT DATA AND FFT
-    """
+	PLOT DATA AND FFT
+	"""
     print('Plotting...')
     plt.figure(1)
     plt.plot(getXPoints(flatData), getYPoints(flatData), 'black')
@@ -108,13 +113,9 @@ def plotDataAndFFT(pData):
     plt.ylabel('Prevalence of Frequency')
 
     print('Figures have been plotted.')
-    plt.show()  # Show all figures
+    plt.show(block=False)  # Show all figures
 
 
 def bin(flatData):
-	result = random.randint(0,1)
-	return result
-
-
-
-
+    result = random.randint(0, 1)
+    return result
